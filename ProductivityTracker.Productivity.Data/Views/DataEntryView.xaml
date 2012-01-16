@@ -1,0 +1,109 @@
+﻿<UserControl x:Class="ProductivityTracker.Productivity.Data.Views.DataEntryView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:Search="clr-namespace:ProductivityTracker.Controls.Search;assembly=ProductivityTracker.Controls" xmlns:Controls2="clr-namespace:ProductivityTracker.Controls;assembly=ProductivityTracker.Controls" xmlns:Controls1="clr-namespace:Microsoft.Windows.Controls;assembly=WPFToolkit.Extended">
+    <Controls1:BusyIndicator IsBusy="{Binding IsBusy}">
+        <Grid Margin="8">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="150"/>
+                <ColumnDefinition />
+                <ColumnDefinition Width="150"/>
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Grid.Column="0" Grid.Row="0" Style="{StaticResource LabelStyle}">
+            <Run Text="Client"/>
+            <Run Text="*" Foreground="Red"/>
+            <Run Text=":"/>
+            </TextBlock>
+            <Search:ClientSearchAutocompleteBox Width="250" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Left" Margin="4 4 14 4" SelectedItem="{Binding Client, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnDataErrors=True}"/>
+
+            <TextBlock Grid.Column="0" Grid.Row="1" Style="{StaticResource LabelStyle}">
+            <Run Text="Recruiter"/>
+            <Run Text="*" Foreground="Red"/>
+            <Run Text=":"/>
+            </TextBlock>
+            <Controls2:CustomComboBox Grid.Column="1" Grid.Row="1" Width="250" Height="23" HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="4 4 14 4" ItemsSource="{Binding Recruiters}" SelectedItem="{Binding Recruiter, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnDataErrors=True}" SelectedValue="{Binding Recruiter.Id}" SelectedValuePath="Id" >
+                <Controls2:CustomComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding FullName}" Foreground="Black" Margin="2" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    </DataTemplate>
+                </Controls2:CustomComboBox.ItemTemplate>
+                <Controls2:CustomComboBox.SelectedItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding FullName}" Foreground="Black" Margin="2" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    </DataTemplate>
+                </Controls2:CustomComboBox.SelectedItemTemplate>
+            </Controls2:CustomComboBox>
+
+            <TextBlock Grid.Column="0" Grid.Row="2" Style="{StaticResource LabelStyle}">
+            <Run Text="Position"/>
+            <Run Text="*" Foreground="Red"/>
+            <Run Text=":"/>
+            </TextBlock>
+            <Controls2:CustomComboBox Grid.Column="1" Grid.Row="2" IsEnabled="{Binding IsPositionEnabled}" Height="23" Width="250" HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="4 4 14 4" ItemsSource="{Binding Client.Positions}" SelectedItem="{Binding Position, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnDataErrors=True}" SelectedValue="{Binding Position.Id}" SelectedValuePath="Id" >
+                <Controls2:CustomComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Name}" Foreground="Black" Margin="2" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    </DataTemplate>
+                </Controls2:CustomComboBox.ItemTemplate>
+                <Controls2:CustomComboBox.SelectedItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Name}" Foreground="Black" Margin="2" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    </DataTemplate>
+                </Controls2:CustomComboBox.SelectedItemTemplate>
+            </Controls2:CustomComboBox>
+
+            <TextBlock Grid.Column="0" Grid.Row="3" Style="{StaticResource LabelStyle}">
+            <Run Text="Candidate"/>
+            <Run Text="*" Foreground="Red"/>
+            <Run Text=":"/>
+            </TextBlock>
+            <Search:CandidateSearchAutocompleteBox Grid.Column="1" Grid.Row="3" Width="250" Margin="4 4 14 4" HorizontalAlignment="Left" SelectedItem="{Binding Candidate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True, ValidatesOnDataErrors=True}"/>
+
+            <TextBlock Grid.Column="0" Grid.Row="4" Style="{StaticResource LabelStyle}">
+            <Run Text="Status"/>
+            <Run Text="*" Foreground="Red"/>
+            <Run Text=":"/>
+            </TextBlock>
+            <Controls2:CustomComboBox Grid.Column="1" Grid.Row="4" Height="23" Width="250" HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="4 4 14 4" ItemsSource="{Binding Statuses}" SelectedItem="{Binding StatusModel, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnDataErrors=True}" SelectedValue="{Binding StatusModel.Id}" SelectedValuePath="Id" >
+                <Controls2:CustomComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Name}" Foreground="Black" Margin="2" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    </DataTemplate>
+                </Controls2:CustomComboBox.ItemTemplate>
+                <Controls2:CustomComboBox.SelectedItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Name}" Foreground="Black" Margin="2" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    </DataTemplate>
+                </Controls2:CustomComboBox.SelectedItemTemplate>
+            </Controls2:CustomComboBox>
+
+            <TextBlock Grid.Column="0" Grid.Row="5" Style="{StaticResource LabelStyle}">
+            <Run Text="Date sent"/>
+            <Run Text="*" Foreground="Red"/>
+            <Run Text=":"/>
+            </TextBlock>
+            <DatePicker Grid.Column="1" Grid.Row="5" Style="{StaticResource DateStyle}" Width="150" SelectedDate="{Binding DateSent, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+
+            <TextBlock Grid.Column="0" Grid.Row="6" Style="{StaticResource LabelStyle}" Text="Expected feedback Date"/>
+            <DatePicker Grid.Column="1" Grid.Row="6" Style="{StaticResource DateStyle}" Width="150" SelectedDate="{Binding ExpectedFeedbackDate, Mode=TwoWay}"/>
+
+            <TextBlock Grid.Column="0" Grid.Row="7" Style="{StaticResource LabelStyle}" Text="Comments" VerticalAlignment="Top"/>
+            <TextBox Grid.Column="1" Grid.Row="7" Style="{StaticResource TextBoxStyle}" Height="150" AcceptsReturn="True" VerticalScrollBarVisibility="Auto" Text="{Binding Comments, Mode=TwoWay}"/>
+
+            <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="8" HorizontalAlignment="Right">
+                <Button Content="Save" Command="{Binding SaveCommand}" Height="23" Width="60" Margin="4"/>
+            </StackPanel>
+        </Grid>
+    </Controls1:BusyIndicator>
+</UserControl>
