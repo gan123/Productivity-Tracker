@@ -1,0 +1,54 @@
+﻿<Window x:Class="ProductivityTracker.Views.ShellView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:Regions="clr-namespace:Microsoft.Practices.Prism.Regions;assembly=Microsoft.Practices.Prism" xmlns:Controls="clr-namespace:Microsoft.Windows.Controls;assembly=WPFToolkit.Extended" xmlns:ProductivityTracker="clr-namespace:ProductivityTracker" Title="Productivty Tracker" Height="500" Width="828" WindowState="Maximized" FontFamily="Tahoma" Icon="/Resources/Logo/small.ico">
+    <Grid x:Name="MainGrid">
+        <Grid.Background>
+            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                <GradientStop Color="White" Offset="0"/>
+                <GradientStop Color="#FFC8CACA" Offset="1"/>
+            </LinearGradientBrush>
+        </Grid.Background>
+        <Controls:BusyIndicator IsBusy="{Binding IsBusy}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+
+                <Border Grid.Row="0" BorderThickness="0 0 0 2" BorderBrush="{StaticResource ButtonNormalBackgroundFill}" >
+                    <StackPanel>
+                        <Image Source="../Resources/Logo/logo.png" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="4 0 0 0" Width="217" Height="34" />
+                        <ProductivityTracker:TabNavigator Background="{StaticResource ButtonNormalBackgroundFill}" Items="{Binding TabItems}" Margin="0 4 0 0" Visibility="{Binding IsAuthenticated, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                    </StackPanel>
+                </Border>
+                
+                <ContentControl Grid.Row="1" Regions:RegionManager.RegionName="MainRegion" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Visibility="{Binding IsAuthenticated, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+
+                <GroupBox Grid.Row="1" Height="150" Width="300" VerticalAlignment="Center" HorizontalAlignment="Center" Header="Login" Visibility="{Binding IsAuthenticated, Converter={StaticResource InvertedBoolToVisibilityConverter}}" >
+                    <Border Padding="2" >
+                        <Grid >
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="75"/>
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition />
+                                <RowDefinition />
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+
+                            <TextBlock Text="Login:" Style="{StaticResource LabelStyle}" Grid.Row="0" Grid.Column="0"/>
+                            <TextBox Grid.Row="0" Grid.Column="1" Style="{StaticResource TextBoxStyle}" Text="{Binding Login, Mode=TwoWay}"/>
+                            <TextBlock Text="Password:" Style="{StaticResource LabelStyle}" Grid.Row="1" Grid.Column="0"/>
+                            <PasswordBox Grid.Row="1" Grid.Column="1" Height="23" Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Center" PasswordChar="*" PasswordChanged="PasswordBox_PasswordChanged"/>
+
+                            <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Right">
+                                <Button Content="Login" Margin="4" Command="{Binding LoginCommand}" Height="23" Width="60" IsDefault="True"/>
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+                </GroupBox>
+            </Grid>
+        </Controls:BusyIndicator>
+    </Grid>
+</Window>

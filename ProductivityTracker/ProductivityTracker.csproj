@@ -1,0 +1,231 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{25CE9D3E-DEED-4000-9B0D-BC1780B975A7}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ProductivityTracker</RootNamespace>
+    <AssemblyName>ProductivityTracker</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Agatha.Common">
+      <HintPath>..\packages\Agatha-Common-Unity.1.3\lib\net40\Agatha.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Agatha.Unity">
+      <HintPath>..\packages\Agatha-Common-Unity.1.3\lib\net40\Agatha.Unity.dll</HintPath>
+    </Reference>
+    <Reference Include="AutoMapper, Version=2.0.0.232, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\AutoMapper.2.0.0\lib\net40-client\AutoMapper.dll</HintPath>
+    </Reference>
+    <Reference Include="MefContrib">
+      <HintPath>..\packages\MefContrib.1.2.0.0\lib\MefContrib.dll</HintPath>
+    </Reference>
+    <Reference Include="MefContrib.Integration.Unity">
+      <HintPath>..\packages\MefContrib.Integration.Unity.1.2.0.0\lib\MefContrib.Integration.Unity.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Expression.Effects, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Expression.Sdk.2.0.20520.0\lib\net40\Microsoft.Expression.Effects.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Expression.Interactions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Expression.Sdk.2.0.20520.0\lib\net40\Microsoft.Expression.Interactions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Prism">
+      <HintPath>..\packages\Prism.4.0.0.0\lib\NET40\Microsoft.Practices.Prism.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Prism.MefExtensions">
+      <HintPath>..\packages\Prism.MEFExtensions.4.0.0.0\lib\NET40\Microsoft.Practices.Prism.MefExtensions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.ServiceLocation">
+      <HintPath>..\packages\CommonServiceLocator.1.0\lib\NET35\Microsoft.Practices.ServiceLocation.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity">
+      <HintPath>..\packages\Unity.2.1.505.0\lib\NET35\Microsoft.Practices.Unity.dll</HintPath>
+    </Reference>
+    <Reference Include="ReuxablesLegacy">
+      <HintPath>..\..\legacy_100\LEGACY\ReuxablesLegacy.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Windows.Controls.Input.Toolkit, Version=3.5.40128.1, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\WPFToolkit.Input.3.5.50211.1\lib\net40\System.Windows.Controls.Input.Toolkit.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Expression.Sdk.2.0.20520.0\lib\net40\System.Windows.Interactivity.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="WPFToolkit, Version=3.5.40128.1, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\WPFToolkit.Input.3.5.50211.1\lib\net40\WPFToolkit.dll</HintPath>
+    </Reference>
+    <Reference Include="WPFToolkit.Extended">
+      <HintPath>..\packages\WPFToolkit.Extended.1.5.0.0\lib\net40\WPFToolkit.Extended.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Interfaces\IShellViewModel.cs" />
+    <Compile Include="Navigation\INavigationService.cs" />
+    <Compile Include="TabNavigator.cs" />
+    <Compile Include="ViewModels\ShellViewModel.cs" />
+    <Compile Include="Views\ShellView.xaml.cs">
+      <DependentUpon>ShellView.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Bootstrapper.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <AppDesigner Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Logo\small.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Themes\Generic.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\ShinyBlue.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\ToggleButtonStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ShellView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ProductivityTracker.Analyse\ProductivityTracker.Analyse.csproj">
+      <Project>{70E00E1B-91FC-4965-BEE1-8BD8D9747692}</Project>
+      <Name>ProductivityTracker.Analyse</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ProductivityTracker.Candidate\ProductivityTracker.Candidate.csproj">
+      <Project>{6DBA6DA9-2A4E-4027-A165-E22C2AD984EA}</Project>
+      <Name>ProductivityTracker.Candidate</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ProductivityTracker.Client\ProductivityTracker.Client.csproj">
+      <Project>{8C13D25C-B083-43D3-B052-0E4A0349620B}</Project>
+      <Name>ProductivityTracker.Client</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ProductivityTracker.Common\ProductivityTracker.Common.csproj">
+      <Project>{E452B52F-257A-4680-A5E5-9CA6A0E9401F}</Project>
+      <Name>ProductivityTracker.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ProductivityTracker.Controls\ProductivityTracker.Controls.csproj">
+      <Project>{F4FE5162-FED5-4732-BC5D-D8368F30C690}</Project>
+      <Name>ProductivityTracker.Controls</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ProductivityTracker.Domain\ProductivityTracker.Domain.csproj">
+      <Project>{95CD3FCE-48C1-4DF3-87C5-157935AC8463}</Project>
+      <Name>ProductivityTracker.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ProductivityTracker.Productivity.Data\ProductivityTracker.Productivity.Data.csproj">
+      <Project>{04D18360-3E7F-4AB6-9402-41906475ACF7}</Project>
+      <Name>ProductivityTracker.Productivity.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ProductivityTracker.Recruiter\ProductivityTracker.Recruiter.csproj">
+      <Project>{C9F3177B-0D0B-4E35-B176-1449F4537911}</Project>
+      <Name>ProductivityTracker.Recruiter</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ProductivityTracker.Services\ProductivityTracker.Services.csproj">
+      <Project>{2F3869E0-3C92-4E20-A575-66F56729C88A}</Project>
+      <Name>ProductivityTracker.Services</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ProductivityTracker.Ui.Common\ProductivityTracker.Ui.Common.csproj">
+      <Project>{9F4219B1-9154-4B33-A491-1603A74A2C99}</Project>
+      <Name>ProductivityTracker.Ui.Common</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icons\client.png" />
+    <Resource Include="Resources\Icons\edit.png" />
+    <Resource Include="Resources\Icons\mining.png" />
+    <Resource Include="Resources\Icons\people.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Logo\logo_300.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Logo\logo.PNG" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
