@@ -1,0 +1,17 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <DataTemplate x:Key="ClientTemplate">
+        <StackPanel>
+            <TextBlock Text="{Binding Name}" Margin="4 4 4 2" FontWeight="Bold"/>
+            <TextBlock Text="{Binding IndustryName}" Margin="4 2 4 4" Foreground="Gray"/>
+        </StackPanel>
+    </DataTemplate>
+
+    <DataTemplate x:Key="CandidateTemplate">
+        <StackPanel>
+            <TextBlock Text="{Binding Name}" Margin="4 4 4 2" FontWeight="Bold"/>
+            <TextBlock Text="{Binding Company}" Margin="4 2 4 2" Foreground="Gray"/>
+            <TextBlock Text="{Binding Contact}" Margin="4 2 4 4" />
+        </StackPanel>
+    </DataTemplate>
+</ResourceDictionary>
