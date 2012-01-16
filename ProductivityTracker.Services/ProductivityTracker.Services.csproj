@@ -1,0 +1,230 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{2F3869E0-3C92-4E20-A575-66F56729C88A}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ProductivityTracker.Services</RootNamespace>
+    <AssemblyName>ProductivityTracker.Services</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Agatha.Common">
+      <HintPath>..\packages\Agatha-Common-Unity.1.3\lib\net40\Agatha.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Agatha.ServiceLayer">
+      <HintPath>..\packages\Agatha-ServiceLayer-Unity.1.3\lib\net40\Agatha.ServiceLayer.dll</HintPath>
+    </Reference>
+    <Reference Include="Agatha.Unity">
+      <HintPath>..\packages\Agatha-Common-Unity.1.3\lib\net40\Agatha.Unity.dll</HintPath>
+    </Reference>
+    <Reference Include="AsyncCtpLibrary">
+      <HintPath>..\packages\RavenDB.1.0.573\lib\net40\AsyncCtpLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="AutoMapper">
+      <HintPath>..\packages\AutoMapper.2.0.0\lib\net40-client\AutoMapper.dll</HintPath>
+    </Reference>
+    <Reference Include="Common.Logging">
+      <HintPath>..\packages\Common.Logging.2.0.0\lib\2.0\Common.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="FizzWare.NBuilder">
+      <HintPath>..\packages\NBuilder.3.0.1.1\lib\FizzWare.NBuilder.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.ServiceLocation">
+      <HintPath>..\packages\CommonServiceLocator.1.0\lib\NET35\Microsoft.Practices.ServiceLocation.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity">
+      <HintPath>..\packages\Unity.2.1.505.0\lib\NET35\Microsoft.Practices.Unity.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.4.0.5\lib\net40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="NLog">
+      <HintPath>..\packages\NLog.2.0.0.2000\lib\net40\NLog.dll</HintPath>
+    </Reference>
+    <Reference Include="Raven.Abstractions">
+      <HintPath>..\packages\RavenDB.1.0.573\lib\net40\Raven.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Raven.Client.Debug">
+      <HintPath>..\packages\RavenDB.1.0.573\lib\net40\Raven.Client.Debug.dll</HintPath>
+    </Reference>
+    <Reference Include="Raven.Client.Lightweight">
+      <HintPath>..\packages\RavenDB.1.0.573\lib\net40\Raven.Client.Lightweight.dll</HintPath>
+    </Reference>
+    <Reference Include="Raven.Client.MvcIntegration">
+      <HintPath>..\packages\RavenDB.1.0.573\lib\net40\Raven.Client.MvcIntegration.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.ServiceProcess" />
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AgathaUtilities\CustomAsyncRequestDispatcher.cs" />
+    <Compile Include="Handlers\Commands\AddCandidateHandler.cs" />
+    <Compile Include="Handlers\Commands\AddClientHandler.cs" />
+    <Compile Include="Handlers\Commands\AddIndustryHandler.cs" />
+    <Compile Include="Handlers\Commands\AddPositionHandler.cs" />
+    <Compile Include="Handlers\Commands\AddProductivityHandler.cs" />
+    <Compile Include="Handlers\Commands\AddRecruiterHandler.cs" />
+    <Compile Include="Handlers\Commands\RemoveCandidateHandler.cs" />
+    <Compile Include="Handlers\Commands\RemoveIndustryHandler.cs" />
+    <Compile Include="Handlers\Commands\RemovePositionHandler.cs" />
+    <Compile Include="Handlers\Commands\RemoveRecruiterHandler.cs" />
+    <Compile Include="Handlers\Commands\UpdateCandidateHandler.cs" />
+    <Compile Include="Handlers\Commands\UpdateClientHandler.cs" />
+    <Compile Include="Handlers\Commands\UpdatePasswordHandler.cs" />
+    <Compile Include="Handlers\Commands\UpdateRecruiterHandler.cs" />
+    <Compile Include="Handlers\Commands\UpdateStatusAndCommentsHandler.cs" />
+    <Compile Include="Handlers\Queries\GetCandidatesHandler.cs" />
+    <Compile Include="Handlers\Queries\GetClientsCoveredHandler.cs" />
+    <Compile Include="Handlers\Queries\GetIndustriesHandler.cs" />
+    <Compile Include="Handlers\Queries\GetPositionsCoveredHandler.cs" />
+    <Compile Include="Handlers\Queries\GetPositionsHandler.cs" />
+    <Compile Include="Handlers\Queries\GetProductivitiesHandler.cs" />
+    <Compile Include="Handlers\Queries\GetProductivityByClientSummaryHandler.cs" />
+    <Compile Include="Handlers\Queries\GetRecruitersHandler.cs" />
+    <Compile Include="Handlers\Queries\GetStatusesHandler.cs" />
+    <Compile Include="Handlers\Queries\GetUserProfileHandler.cs" />
+    <Compile Include="Indexes\CandidateIndex.cs" />
+    <Compile Include="Indexes\ClientIndex.cs" />
+    <Compile Include="Indexes\ProductivityIndex.cs" />
+    <Compile Include="Indexes\RecruiterIndex.cs" />
+    <Compile Include="Installers\AgathaInstaller.cs" />
+    <Compile Include="Installers\ApplicationServicesInstaller.cs" />
+    <Compile Include="Installers\InfrastructureInstaller.cs" />
+    <Compile Include="Installers\RavenInstaller.cs" />
+    <Compile Include="Mappings\ObjectMapper.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RequestResponse\Commands\AddCandidateRequest.cs" />
+    <Compile Include="RequestResponse\Commands\AddCandidateResponse.cs" />
+    <Compile Include="RequestResponse\Commands\AddClientRequest.cs" />
+    <Compile Include="RequestResponse\Commands\AddClientResponse.cs" />
+    <Compile Include="RequestResponse\Commands\AddIndustryRequest.cs" />
+    <Compile Include="RequestResponse\Commands\AddIndustryResponse.cs" />
+    <Compile Include="RequestResponse\Commands\AddPositionRequest.cs" />
+    <Compile Include="RequestResponse\Commands\AddPositionResponse.cs" />
+    <Compile Include="RequestResponse\Commands\AddProductivityRequest.cs" />
+    <Compile Include="RequestResponse\Commands\AddProductivityResponse.cs" />
+    <Compile Include="RequestResponse\Commands\AddRecruiterRequest.cs" />
+    <Compile Include="RequestResponse\Commands\AddRecruiterResponse.cs" />
+    <Compile Include="RequestResponse\Commands\RemoveCandidateRequest.cs" />
+    <Compile Include="RequestResponse\Commands\RemoveCandidateResponse.cs" />
+    <Compile Include="RequestResponse\Commands\RemoveClientRequest.cs" />
+    <Compile Include="RequestResponse\Commands\RemoveClientResponse.cs" />
+    <Compile Include="RequestResponse\Commands\RemoveIndustryRequest.cs" />
+    <Compile Include="RequestResponse\Commands\RemoveIndustryResponse.cs" />
+    <Compile Include="RequestResponse\Commands\RemovePositionRequest.cs" />
+    <Compile Include="RequestResponse\Commands\RemovePositionResponse.cs" />
+    <Compile Include="RequestResponse\Commands\RemoveRecruiterRequest.cs" />
+    <Compile Include="RequestResponse\Commands\RemoveRecruiterResponse.cs" />
+    <Compile Include="RequestResponse\Commands\UpdateCandidateRequest.cs" />
+    <Compile Include="RequestResponse\Commands\UpdateCandidateResponse.cs" />
+    <Compile Include="RequestResponse\Commands\UpdateClientRequest.cs" />
+    <Compile Include="RequestResponse\Commands\UpdateClientResponse.cs" />
+    <Compile Include="RequestResponse\Commands\UpdatePasswordRequest.cs" />
+    <Compile Include="RequestResponse\Commands\UpdatePasswordResponse.cs" />
+    <Compile Include="RequestResponse\Commands\UpdateRecruiterRequest.cs" />
+    <Compile Include="RequestResponse\Commands\UpdateRecruiterResponse.cs" />
+    <Compile Include="RequestResponse\Commands\UpdateStatusAndCommentsRequest.cs" />
+    <Compile Include="RequestResponse\Commands\UpdateStatusAndCommentsResponse.cs" />
+    <Compile Include="RequestResponse\Queries\GetCandidatesRequest.cs" />
+    <Compile Include="RequestResponse\Queries\GetCandidatesResponse.cs" />
+    <Compile Include="RequestResponse\Queries\GetClientsCoveredRequest.cs" />
+    <Compile Include="RequestResponse\Queries\GetClientsCoveredResponse.cs" />
+    <Compile Include="RequestResponse\Queries\GetIndustriesRequest.cs" />
+    <Compile Include="RequestResponse\Queries\GetIndustriesResponse.cs" />
+    <Compile Include="RequestResponse\Queries\GetPositionsCoveredRequest.cs" />
+    <Compile Include="RequestResponse\Queries\GetPositionsCoveredResponse.cs" />
+    <Compile Include="RequestResponse\Queries\GetPositionsRequest.cs" />
+    <Compile Include="RequestResponse\Queries\GetPositionsResponse.cs" />
+    <Compile Include="RequestResponse\Queries\GetProductivitiesRequest.cs" />
+    <Compile Include="RequestResponse\Queries\GetProductivitiesResponse.cs" />
+    <Compile Include="RequestResponse\Queries\GetProductivityByClientSummaryRequest.cs" />
+    <Compile Include="RequestResponse\Queries\GetProductivityByClientSummaryResponse.cs" />
+    <Compile Include="RequestResponse\Queries\GetRecruitersRequest.cs" />
+    <Compile Include="RequestResponse\Queries\GetRecruitersResponse.cs" />
+    <Compile Include="RequestResponse\Queries\GetStatusesRequest.cs" />
+    <Compile Include="RequestResponse\Queries\GetStatusesResponse.cs" />
+    <Compile Include="RequestResponse\AuthenticatedRequest.cs" />
+    <Compile Include="ServiceConfiguration.cs" />
+    <Compile Include="Services\Authroisation\AuthorisationService.cs" />
+    <Compile Include="Services\Authroisation\IAuthorisationService.cs" />
+    <Compile Include="Services\Authroisation\ICurrentUser.cs" />
+    <Compile Include="Services\Candidate\CandidateService.cs" />
+    <Compile Include="Services\Candidate\ICandidateService.cs" />
+    <Compile Include="Services\Client\ClientService.cs" />
+    <Compile Include="Services\Client\IClientService.cs" />
+    <Compile Include="Services\Helpers\QueryExtensions.cs" />
+    <Compile Include="Services\Industry\IIndustryService.cs" />
+    <Compile Include="Services\Industry\IndustryService.cs" />
+    <Compile Include="Services\Position\IPositionService.cs" />
+    <Compile Include="Services\Position\PositionService.cs" />
+    <Compile Include="Services\Productivity\IProductivityService.cs" />
+    <Compile Include="Services\Productivity\ProductivityService.cs" />
+    <Compile Include="Services\Recruiter\IRecruiterService.cs" />
+    <Compile Include="Services\Recruiter\RecruiterService.cs" />
+    <Compile Include="Services\ServiceBase.cs" />
+    <Compile Include="Services\Status\IStatusService.cs" />
+    <Compile Include="Services\Status\StatusService.cs" />
+    <Compile Include="UnitOfWork\IRavenSessionManager.cs" />
+    <Compile Include="UnitOfWork\IRequestState.cs" />
+    <Compile Include="UnitOfWork\RavenRequestHandler.cs" />
+    <Compile Include="UnitOfWork\RavenSessionManager.cs" />
+    <Compile Include="UnitOfWork\RequestState.cs" />
+    <Compile Include="UnityExtensions\IUnityInstaller.cs" />
+    <Compile Include="UnityExtensions\UnityExtensions.cs" />
+    <Compile Include="RequestResponse\Queries\GetUserProfileRequest.cs" />
+    <Compile Include="RequestResponse\Queries\GetUserProfileResponse.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ProductivityTracker.Common\ProductivityTracker.Common.csproj">
+      <Project>{E452B52F-257A-4680-A5E5-9CA6A0E9401F}</Project>
+      <Name>ProductivityTracker.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ProductivityTracker.Domain\ProductivityTracker.Domain.csproj">
+      <Project>{95CD3FCE-48C1-4DF3-87C5-157935AC8463}</Project>
+      <Name>ProductivityTracker.Domain</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
