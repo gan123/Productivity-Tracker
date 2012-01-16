@@ -1,0 +1,139 @@
+﻿<UserControl x:Class="ProductivityTracker.Recruiter.Views.RecruitersView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:Interactivity="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity" xmlns:InteractionRequest="clr-namespace:Microsoft.Practices.Prism.Interactivity.InteractionRequest;assembly=Microsoft.Practices.Prism.Interactivity" xmlns:Common="clr-namespace:ProductivityTracker.Ui.Common;assembly=ProductivityTracker.Ui.Common" xmlns:Views="clr-namespace:ProductivityTracker.Recruiter.Views" mc:Ignorable="d" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:Controls1="clr-namespace:Microsoft.Windows.Controls;assembly=WPFToolkit.Extended" xmlns:Controls="clr-namespace:ProductivityTracker.Controls;assembly=ProductivityTracker.Controls" d:DesignHeight="30" d:DesignWidth="37">
+    <UserControl.Resources>
+        <Style x:Key="SmallLabelStyle" BasedOn="{StaticResource LabelStyle}" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="9"/>
+        </Style>
+        <Style x:Key="SmallTextStyle" BasedOn="{StaticResource TextBoxStyle}" TargetType="TextBox">
+            <Setter Property="FontSize" Value="9"/>
+        </Style>
+    </UserControl.Resources>
+    <Controls1:BusyIndicator IsBusy="{Binding IsBusy}">
+        <Grid x:Name="ParentGrid">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <StackPanel Orientation="Horizontal" Grid.Row="0" Margin="4" HorizontalAlignment="Right" Visibility="{Binding IsAdmin, Converter={StaticResource BooleanToVisibilityConverter}}">
+                    <Button Command="{Binding AddCommand}" Cursor="Hand" Margin="4 4 2 4" >
+                        <Button.Template>
+                            <ControlTemplate>
+                                <Border Padding="2" Background="White" BorderBrush="LightGray" BorderThickness="1">
+                                    <StackPanel Orientation="Horizontal">
+                                        <Image Source="/ProductivityTracker.Recruiter;component/Resources/Icons/add.png" Height="15" Width="15" Margin="2"/>
+                                        <TextBlock Text="Add" Margin="2" Foreground="Black" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                </Border>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+                </StackPanel>
+
+                <ItemsControl Grid.Row="1" Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top" ItemsSource="{Binding Recruiters}">
+                    <ItemsControl.Template>
+                        <ControlTemplate>
+                            <ScrollViewer HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderThickness="0" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+                                <ItemsPresenter/>
+                            </ScrollViewer>
+                        </ControlTemplate>
+                    </ItemsControl.Template>
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <UniformGrid Columns="3"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Controls:RecruiterControl DataContext="{Binding}" IsAdmin="{Binding DataContext.IsAdmin, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ItemsControl}}" IsBusy="{Binding IsBusy}" Height="170" Margin="4" DeleteCommand="{Binding DataContext.RemoveCommand, RelativeSource={RelativeSource AncestorType=ItemsControl, Mode=FindAncestor}}" MaximizeCommand="{Binding DataContext.MaximizeCommand, RelativeSource={RelativeSource AncestorType=ItemsControl, Mode=FindAncestor}}">
+                                <Controls:RecruiterControl.EditTemplate>
+                                    <DataTemplate>
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="70"/>
+                                                <ColumnDefinition />
+                                            </Grid.ColumnDefinitions>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="auto"/>
+                                                <RowDefinition Height="auto"/>
+                                                <RowDefinition Height="auto"/>
+                                                <RowDefinition Height="auto"/>                                                
+                                            </Grid.RowDefinitions>
+
+                                            <TextBlock Grid.Column="0" Grid.Row="0" Text="Name:" Style="{StaticResource SmallLabelStyle}" />
+                                            <TextBox Grid.Column="1" Grid.Row="0" Text="{Binding FullName, Mode=TwoWay, ValidatesOnDataErrors=True, NotifyOnValidationError=True}" Style="{StaticResource SmallTextStyle}"/>
+
+                                            <TextBlock Grid.Column="0" Grid.Row="1" Text="Email:" Style="{StaticResource SmallLabelStyle}" />
+                                            <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding Email, Mode=TwoWay, ValidatesOnDataErrors=True, NotifyOnValidationError=True}" Style="{StaticResource SmallTextStyle}"/>
+
+                                            <TextBlock Grid.Column="0" Grid.Row="2" Text="Phone:" Style="{StaticResource SmallLabelStyle}" />
+                                            <TextBox Grid.Column="1" Grid.Row="2" Text="{Binding Contact, Mode=TwoWay, ValidatesOnDataErrors=True, NotifyOnValidationError=True}" Style="{StaticResource SmallTextStyle}"/>
+
+                                            <TextBlock Grid.Column="0" Grid.Row="3" Text="Designation:" Style="{StaticResource SmallLabelStyle}" />
+                                            <TextBox Grid.Column="1" Grid.Row="3" Text="{Binding Designation, Mode=TwoWay, ValidatesOnDataErrors=True, NotifyOnValidationError=True}" Style="{StaticResource SmallTextStyle}"/>
+                                        </Grid>
+                                    </DataTemplate>
+                                </Controls:RecruiterControl.EditTemplate>
+                                <Controls:RecruiterControl.ReadOnlyTemplate>
+                                    <DataTemplate>
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="auto"/>
+                                                <ColumnDefinition Width="70"/>
+                                                <ColumnDefinition />
+                                            </Grid.ColumnDefinitions>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="auto"/>
+                                                <RowDefinition Height="auto"/>
+                                                <RowDefinition Height="auto"/>
+                                                <RowDefinition Height="auto"/>
+                                                <RowDefinition Height="auto"/>
+                                                <RowDefinition Height="auto"/>
+                                            </Grid.RowDefinitions>
+
+                                            <Image Source="/ProductivityTracker.Recruiter;component/Resources/Images/lady.png" Height="80" Width="80" VerticalAlignment="Top" Margin="4" Grid.Column="0" Grid.Row="0" Grid.RowSpan="6" />
+
+                                            <TextBlock Grid.Column="1" Grid.Row="0" Text="Name:" Style="{StaticResource SmallLabelStyle}" />
+                                            <TextBlock Grid.Column="2" Grid.Row="0" Text="{Binding FullName}" TextTrimming="CharacterEllipsis" Style="{StaticResource SmallLabelStyle}" FontWeight="Normal"/>
+
+                                            <TextBlock Grid.Column="1" Grid.Row="1" Text="Age:" Style="{StaticResource SmallLabelStyle}" />
+                                            <TextBlock Grid.Column="2" Grid.Row="1" Text="{Binding Age, FallbackValue='NA', TargetNullValue='NA'}" Style="{StaticResource LabelStyle}" FontWeight="Normal"/>
+
+                                            <TextBlock Grid.Column="1" Grid.Row="2" Text="Email:" Style="{StaticResource SmallLabelStyle}" />
+                                            <TextBlock Grid.Column="2" Grid.Row="2" Text="{Binding Email}" TextTrimming="CharacterEllipsis" Style="{StaticResource SmallLabelStyle}" FontWeight="Normal"/>
+
+                                            <TextBlock Grid.Column="1" Grid.Row="3" Text="Phone:" Style="{StaticResource SmallLabelStyle}" />
+                                            <TextBlock Grid.Column="2" Grid.Row="3" Text="{Binding Contact}" Style="{StaticResource SmallLabelStyle}" FontWeight="Normal"/>
+
+                                            <TextBlock Grid.Column="1" Grid.Row="4" Text="Designation:" Style="{StaticResource SmallLabelStyle}" />
+                                            <TextBlock Grid.Column="2" Grid.Row="4" Text="{Binding Designation}" Style="{StaticResource SmallLabelStyle}" FontWeight="Normal"/>
+
+                                            <TextBlock Grid.Column="1" Grid.Row="5" Text="D.O.J:" Style="{StaticResource SmallLabelStyle}" />
+                                            <TextBlock Grid.Column="2" Grid.Row="5" Text="{Binding DateOfJoining, StringFormat='{}dd-MMM-yy'}" Style="{StaticResource SmallLabelStyle}" FontWeight="Normal"/>
+                                        </Grid>
+                                    </DataTemplate>
+                                </Controls:RecruiterControl.ReadOnlyTemplate>
+                            </Controls:RecruiterControl>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </Grid>
+        </Grid>
+    </Controls1:BusyIndicator>
+    <Interactivity:Interaction.Triggers>
+        <InteractionRequest:InteractionRequestTrigger SourceObject="{Binding AddRequest}">
+            <Common:PopupChildWindowAction Parent="{Binding ElementName=ParentGrid}"/>
+        </InteractionRequest:InteractionRequestTrigger>
+        <InteractionRequest:InteractionRequestTrigger SourceObject="{Binding SummaryRequest}">
+            <Common:PopupChildWindowAction Parent="{Binding ElementName=ParentGrid}">
+                <Common:PopupChildWindowAction.ChildWindow>
+                    <Views:DetailsView />
+                </Common:PopupChildWindowAction.ChildWindow>
+            </Common:PopupChildWindowAction>
+        </InteractionRequest:InteractionRequestTrigger>
+    </Interactivity:Interaction.Triggers>
+</UserControl>
+
+    
+    
