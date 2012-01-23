@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel.Composition;
 using System.Linq;
 using System.Threading;
@@ -18,6 +19,7 @@ using ProductivityTracker.Common;
 using ProductivityTracker.Controls.Search;
 using ProductivityTracker.Services.RequestResponse.Queries;
 using ProductivityTracker.Ui.Common;
+using Visifire.Charts;
 
 namespace ProductivityTracker.Analyse.ViewModels
 {
@@ -40,6 +42,7 @@ namespace ProductivityTracker.Analyse.ViewModels
         private string _month;
         private IEnumerable<string> _weeks;
         private string _week;
+        private DataSeriesCollection _monthChartSource;
 
         [ImportingConstructor]
         public AnalyseViewModel(
@@ -69,9 +72,41 @@ namespace ProductivityTracker.Analyse.ViewModels
                                                       var productivties = Mapper.Map<IEnumerable<ProductivityDto>, IEnumerable<ProductivityModel>>(r.Get<GetProductivitiesResponse>().Productivities);
                                                       Months = productivties.Select(p => p.Month).Distinct();
                                                       Weeks = productivties.Select(p => p.Week).Distinct();
-                                                      Productivities.Dispatcher.BeginInvoke(DispatcherPriority.Render, new Action(() => { Productivities.Source = productivties; }));
+                                                      Productivities.Dispatcher.BeginInvoke(DispatcherPriority.Render, new Action(() =>
+                                                                                                                                      {
+                                                                                                                                          Productivities.Source = productivties;
+                                                                                                                                          MonthChart(productivties);
+                                                                                                                                      }));
                                                       IsBusy = false;
                                                   }, e => IsBusy = false);
+        }
+
+        private void MonthChart(IEnumerable<ProductivityModel> productivityModels)
+        {
+            var dataSeries = new DataSeriesCollection();
+            if (Recruiter == null)
+            {
+                foreach(var recruiter in Recruiters)
+                {
+                    var items = productivityModels.Where(p => p.RecruiterFullName == recruiter.FullName);
+                    if (items.Any())
+                    {
+                        var series = new DataSeries { LegendText = recruiter.FullName, RenderAs = RenderAs.Column, XValueType = ChartValueTypes.Date };
+                        var dataPoints = items.GroupBy(i => i.Month,
+                                                       (k, g) => new DataPoint
+                                                       {
+                                                           XValue = k,
+                                                           YValue = g.Count(),
+                                                           AxisXLabel = k
+                                                       });
+                        foreach (var point in dataPoints) series.DataPoints.Add(point);
+                        dataSeries.Add(series);
+                    }
+                }
+            }
+
+            MonthChartSource = dataSeries;
+            if (ChartUpdated != null) ChartUpdated(this, EventArgs.Empty);
         }
 
         public IInteractionRequest UpdateStatusRequest
@@ -193,6 +228,16 @@ namespace ProductivityTracker.Analyse.ViewModels
             }
         }
 
+        public DataSeriesCollection MonthChartSource
+        {
+            get { return _monthChartSource; }
+            set
+            {
+                _monthChartSource = value;
+                RaisePropertyChanged(() => MonthChartSource);
+            }
+        }
+
         public string Week
         {
             get { return _week; }
@@ -206,6 +251,7 @@ namespace ProductivityTracker.Analyse.ViewModels
         public ICommand UpdateStatusCommand { get; set; }
 
         public ICommand SearchCommand { get; set; }
+        public event EventHandler ChartUpdated;
 
         private void UpdateStatus(ProductivityModel productivity)
         {

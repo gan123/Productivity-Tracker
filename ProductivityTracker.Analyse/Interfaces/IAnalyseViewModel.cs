@@ -1,9 +1,12 @@
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Windows.Data;
 using System.Windows.Input;
 using Microsoft.Practices.Prism.Regions;
 using ProductivityTracker.Analyse.Models;
 using ProductivityTracker.Controls.Search;
+using Visifire.Charts;
 
 namespace ProductivityTracker.Analyse.Interfaces
 {
@@ -19,8 +22,10 @@ namespace ProductivityTracker.Analyse.Interfaces
         IEnumerable<string> Months { get; set; }
         string Month { get; set; }
         IEnumerable<string> Weeks { get; set; }
+        DataSeriesCollection MonthChartSource { get; set; }
         string Week { get; set; }
         ICommand UpdateStatusCommand { get; set; }
         ICommand SearchCommand { get; set; }
+        event EventHandler ChartUpdated;
     }
 }
