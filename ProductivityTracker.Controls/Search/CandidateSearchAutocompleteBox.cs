@@ -32,7 +32,7 @@ namespace ProductivityTracker.Controls.Search
             requestDispatcher.Add(new GetCandidatesRequest { Query = query });
             requestDispatcher.ProcessRequests(r =>
                                                   {
-                                                      var candidates = Mapper.Map<IEnumerable<CandidateDto>, IEnumerable<CandidateModel>>(r.Get<GetCandidatesResponse>().Candidates);
+                                                      var candidates = Mapper.Map<IEnumerable<CandidateDto>, IEnumerable<CandidateSearch>>(r.Get<GetCandidatesResponse>().Candidates);
                                                       Dispatcher.BeginInvoke(new Action(() =>
                                                                                             {
                                                                                                 SearchResults = candidates;
@@ -42,7 +42,7 @@ namespace ProductivityTracker.Controls.Search
         }
     }
 
-    public class CandidateModel
+    public class CandidateSearch
     {
         public string Id { get; set; }
         public string Name { get; set; }

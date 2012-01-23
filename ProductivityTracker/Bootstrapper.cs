@@ -67,7 +67,7 @@ namespace ProductivityTracker
 
             Mapper.CreateMap<ClientDto, ClientSearch>();
             Mapper.CreateMap<PositionDto, ClientPosition>();
-            Mapper.CreateMap<CandidateDto, CandidateModel>();
+            Mapper.CreateMap<CandidateDto, CandidateSearch>();
         }
     }
 }

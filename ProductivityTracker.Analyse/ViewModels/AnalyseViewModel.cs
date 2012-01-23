@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
+using System.Linq;
 using System.Threading;
 using System.Windows.Data;
 using System.Windows.Input;
@@ -14,6 +15,7 @@ using ProductivityTracker.Analyse.Interfaces;
 using ProductivityTracker.Analyse.Models;
 using ProductivityTracker.Analyse.Views;
 using ProductivityTracker.Common;
+using ProductivityTracker.Controls.Search;
 using ProductivityTracker.Services.RequestResponse.Queries;
 using ProductivityTracker.Ui.Common;
 
@@ -29,6 +31,15 @@ namespace ProductivityTracker.Analyse.ViewModels
         private CollectionViewSource _productivities;
         private IEnumerable<StatusModel> _statuses;
         private readonly InteractionRequest<ResponseNotification> _updateStatusRequest;
+        private StatusModel _status;
+        private IEnumerable<RecruiterModel> _recruiters;
+        private RecruiterModel _recruiter;
+        private IEnumerable<string> _months;
+        private ClientSearch _client;
+        private CandidateSearch _candidate;
+        private string _month;
+        private IEnumerable<string> _weeks;
+        private string _week;
 
         [ImportingConstructor]
         public AnalyseViewModel(
@@ -49,12 +60,15 @@ namespace ProductivityTracker.Analyse.ViewModels
             IsBusy = false;
             var requestDispatcher = _asyncRequestDispatcherFactory.CreateAsyncRequestDispatcher();
             requestDispatcher.Add(new GetProductivitiesRequest());
+            requestDispatcher.Add(new GetRecruitersRequest());
             requestDispatcher.Add(new GetStatusesRequest());
             requestDispatcher.ProcessRequests(r =>
                                                   {
                                                       Statuses = Mapper.Map<IEnumerable<StatusDto>, IEnumerable<StatusModel>>(r.Get<GetStatusesResponse>().Statuses);
-                                                      var productivties = Mapper.Map<IEnumerable<ProductivityDto>, IEnumerable<ProductivityModel>>(
-                                                          r.Get<GetProductivitiesResponse>().Productivities);
+                                                      Recruiters = Mapper.Map<IEnumerable<RecruiterDto>, IEnumerable<RecruiterModel>>(r.Get<GetRecruitersResponse>().Recruiters);
+                                                      var productivties = Mapper.Map<IEnumerable<ProductivityDto>, IEnumerable<ProductivityModel>>(r.Get<GetProductivitiesResponse>().Productivities);
+                                                      Months = productivties.Select(p => p.Month).Distinct();
+                                                      Weeks = productivties.Select(p => p.Week).Distinct();
                                                       Productivities.Dispatcher.BeginInvoke(DispatcherPriority.Render, new Action(() => { Productivities.Source = productivties; }));
                                                       IsBusy = false;
                                                   }, e => IsBusy = false);
@@ -89,6 +103,26 @@ namespace ProductivityTracker.Analyse.ViewModels
             }
         }
 
+        public ClientSearch Client
+        {
+            get { return _client; }
+            set
+            {
+                _client = value;
+                RaisePropertyChanged(() => Client);
+            }
+        }
+
+        public CandidateSearch Candidate
+        {
+            get { return _candidate; }
+            set
+            {
+                _candidate = value;
+                RaisePropertyChanged(() => Candidate);
+            }
+        }
+
         public IEnumerable<StatusModel> Statuses
         {
             get { return _statuses; }
@@ -99,7 +133,79 @@ namespace ProductivityTracker.Analyse.ViewModels
             }
         }
 
+        public StatusModel Status
+        {
+            get { return _status; }
+            set
+            {
+                _status = value;
+                RaisePropertyChanged(() => Status);
+            }
+        }
+
+        public IEnumerable<RecruiterModel> Recruiters
+        {
+            get { return _recruiters; }
+            set
+            {
+                _recruiters = value;
+                RaisePropertyChanged(() => Recruiters);
+            }
+        }
+
+        public RecruiterModel Recruiter
+        {
+            get { return _recruiter; }
+            set
+            {
+                _recruiter = value;
+                RaisePropertyChanged(() => Recruiter);
+            }
+        }
+
+        public IEnumerable<string> Months
+        {
+            get { return _months; }
+            set
+            {
+                _months = value;
+                RaisePropertyChanged(() => Months);
+            }
+        }
+
+        public string Month
+        {
+            get { return _month; }
+            set
+            {
+                _month = value;
+                RaisePropertyChanged(() => Month);
+            }
+        }
+
+        public IEnumerable<string> Weeks
+        {
+            get { return _weeks; }
+            set
+            {
+                _weeks = value;
+                RaisePropertyChanged(() => Weeks);
+            }
+        }
+
+        public string Week
+        {
+            get { return _week; }
+            set
+            {
+                _week = value;
+                RaisePropertyChanged(() => Week);
+            }
+        }
+
         public ICommand UpdateStatusCommand { get; set; }
+
+        public ICommand SearchCommand { get; set; }
 
         private void UpdateStatus(ProductivityModel productivity)
         {

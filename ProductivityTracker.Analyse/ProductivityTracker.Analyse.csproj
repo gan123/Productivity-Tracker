@@ -76,6 +76,7 @@
     <Compile Include="Interfaces\IAnalyseViewModel.cs" />
     <Compile Include="Interfaces\IUpdateStatusViewModel.cs" />
     <Compile Include="Models\ProductivityModel.cs" />
+    <Compile Include="Models\RecruiterModel.cs" />
     <Compile Include="Models\StatusModel.cs" />
     <Compile Include="ObjectMapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

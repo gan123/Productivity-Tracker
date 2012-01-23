@@ -30,7 +30,7 @@ namespace ProductivityTracker.Productivity.Data.ViewModels
         private DateTime? _dateSent;
         private DateTime? _expectedFeedbackDate;
         private ClientPosition _position;
-        private CandidateModel _candidate;
+        private CandidateSearch _candidate;
         private bool _isPositionEnabled;
         private string _comments;
 
@@ -158,7 +158,7 @@ namespace ProductivityTracker.Productivity.Data.ViewModels
             }
         }
 
-        public CandidateModel Candidate
+        public CandidateSearch Candidate
         {
             get { return _candidate; }
             set

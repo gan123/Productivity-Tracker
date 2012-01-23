@@ -18,7 +18,7 @@ namespace ProductivityTracker.Productivity.Data.Interfaces
         DateTime? DateSent { get; set; }
         DateTime? ExpectedFeedbackDate { get; set; }
         ClientPosition Position { get; set; }
-        CandidateModel Candidate { get; set; }
+        CandidateSearch Candidate { get; set; }
         string Comments { get; set; }
         bool IsPositionEnabled { get; set; }
 

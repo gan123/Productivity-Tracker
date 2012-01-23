@@ -14,10 +14,71 @@
                             <RowDefinition />
                             <RowDefinition />
                         </Grid.RowDefinitions>
-                        <StackPanel Grid.Row="0" Margin="4" Orientation="Horizontal">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition Width="auto"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Grid.Row="0" Grid.Column="0" Margin="4" Orientation="Horizontal">
                             <TextBlock Text="Client:" Style="{StaticResource LabelStyle}" />
-                            <Search:ClientSearchAutocompleteBox Width="250" />
+                            <Search:ClientSearchAutocompleteBox Width="280" />
+                            <TextBlock Text="Candidate:" Margin="8 4 4 4" Style="{StaticResource LabelStyle}" />
+                            <Search:CandidateSearchAutocompleteBox Width="280" />
                         </StackPanel>
+                        <StackPanel Grid.Row="1" Grid.Column="0" Margin="4" Orientation="Horizontal">
+                            <TextBlock Text="Reruiter:" Style="{StaticResource LabelStyle}" />
+                            <Controls:CustomComboBox Grid.Column="1" Grid.Row="0" Height="23" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="4" ItemsSource="{Binding Recruiters}" SelectedItem="{Binding Recruiter, Mode=TwoWay}" SelectedValue="{Binding Recruiter.Id}" SelectedValuePath="Id" >
+                                <Controls:CustomComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding FullName}" Foreground="Black" Margin="2" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                    </DataTemplate>
+                                </Controls:CustomComboBox.ItemTemplate>
+                                <Controls:CustomComboBox.SelectedItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding FullName}" Foreground="Black" Margin="2" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                    </DataTemplate>
+                                </Controls:CustomComboBox.SelectedItemTemplate>
+                            </Controls:CustomComboBox>
+                            <TextBlock Text="Month:" Style="{StaticResource LabelStyle}" />
+                            <Controls:CustomComboBox Grid.Column="1" Grid.Row="0" Height="23" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="4" ItemsSource="{Binding Months}" SelectedItem="{Binding Month, Mode=TwoWay}" SelectedValue="{Binding Month}">
+                                <Controls:CustomComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding}" Foreground="Black" Margin="2" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                    </DataTemplate>
+                                </Controls:CustomComboBox.ItemTemplate>
+                                <Controls:CustomComboBox.SelectedItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding}" Foreground="Black" Margin="2" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                    </DataTemplate>
+                                </Controls:CustomComboBox.SelectedItemTemplate>
+                            </Controls:CustomComboBox>
+                            <TextBlock Text="Week:" Style="{StaticResource LabelStyle}" />
+                            <Controls:CustomComboBox Grid.Column="1" Grid.Row="0" Height="23" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="4" ItemsSource="{Binding Weeks}" SelectedItem="{Binding Week, Mode=TwoWay}" SelectedValue="{Binding Week}" >
+                                <Controls:CustomComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding}" Foreground="Black" Margin="2" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                    </DataTemplate>
+                                </Controls:CustomComboBox.ItemTemplate>
+                                <Controls:CustomComboBox.SelectedItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding}" Foreground="Black" Margin="2" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                    </DataTemplate>
+                                </Controls:CustomComboBox.SelectedItemTemplate>
+                            </Controls:CustomComboBox>
+                            <TextBlock Text="Status:" Style="{StaticResource LabelStyle}" />
+                            <Controls:CustomComboBox Grid.Column="1" Grid.Row="0" Height="23" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="4" ItemsSource="{Binding Statuses}" SelectedItem="{Binding Status, Mode=TwoWay}" SelectedValue="{Binding Status.Id}" SelectedValuePath="Id" >
+                                <Controls:CustomComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Name}" Foreground="Black" Margin="2" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                    </DataTemplate>
+                                </Controls:CustomComboBox.ItemTemplate>
+                                <Controls:CustomComboBox.SelectedItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Name}" Foreground="Black" Margin="2" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                    </DataTemplate>
+                                </Controls:CustomComboBox.SelectedItemTemplate>
+                            </Controls:CustomComboBox>
+                        </StackPanel>
+                        <Button Content="Search" Height="23" Width="60" Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" Command="{Binding SearchCommand}" HorizontalAlignment="Left" VerticalAlignment="Center" />
                     </Grid>
                 </GroupBox>
                 <Controls:CustomDataGrid Grid.Row="1" ItemsSource="{Binding Productivities.View}" Margin="4" RowDetailsVisibilityMode="VisibleWhenSelected">
