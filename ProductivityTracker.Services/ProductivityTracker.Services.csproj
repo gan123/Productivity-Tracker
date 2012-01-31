@@ -78,6 +78,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.ServiceProcess" />
     <Reference Include="System.Transactions" />
@@ -114,6 +115,7 @@
     <Compile Include="Handlers\Queries\GetRecruitersHandler.cs" />
     <Compile Include="Handlers\Queries\GetStatusesHandler.cs" />
     <Compile Include="Handlers\Queries\GetUserProfileHandler.cs" />
+    <Compile Include="Handlers\Queries\SearchProductivitiesHandler.cs" />
     <Compile Include="Indexes\CandidateIndex.cs" />
     <Compile Include="Indexes\ClientIndex.cs" />
     <Compile Include="Indexes\ProductivityIndex.cs" />
@@ -175,6 +177,8 @@
     <Compile Include="RequestResponse\Queries\GetStatusesRequest.cs" />
     <Compile Include="RequestResponse\Queries\GetStatusesResponse.cs" />
     <Compile Include="RequestResponse\AuthenticatedRequest.cs" />
+    <Compile Include="RequestResponse\Queries\SearchProductivitiesRequest.cs" />
+    <Compile Include="RequestResponse\Queries\SearchProductivitiesRsponse.cs" />
     <Compile Include="ServiceConfiguration.cs" />
     <Compile Include="Services\Authroisation\AuthorisationService.cs" />
     <Compile Include="Services\Authroisation\IAuthorisationService.cs" />

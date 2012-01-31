@@ -11,6 +11,7 @@ namespace ProductivityTracker.Candidate.Interfaces
         string CurrentCtc { get; set; }
         string ExpectedCtc { get; set; }
         string NoticePeriod { get; set; }
+        string Position { get; set; }
         string Id { get; set; }
         bool IsEditing { get; set; }
         void Reset();

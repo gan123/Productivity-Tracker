@@ -13,6 +13,7 @@ namespace ProductivityTracker.Candidate.Models
         public string CurrentCtc { get; set; }
         public string ExpectedCtc { get; set; }
         public string NoticePeriod { get; set; }
+        public string Position { get; set; }
         public bool IsChecked
         {
             get { return _isChecked; }

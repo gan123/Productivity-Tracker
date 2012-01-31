@@ -19,7 +19,7 @@ namespace ProductivityTracker.Services.Services.Candidate
                 .WhereContains("Name", QueryExtensions.CleanseAndSplit(query)).ToList();
         }
 
-        public void Add(string name, string contact, string company, string currentCtc, string expectedCtc, string notice)
+        public void Add(string name, string contact, string company, string position, string currentCtc, string expectedCtc, string notice)
         {
             var candidate = new Domain.Model.Candidate
                                 {
@@ -28,7 +28,8 @@ namespace ProductivityTracker.Services.Services.Candidate
                                     CurrentCtc = currentCtc,
                                     ExpectedCtc = expectedCtc,
                                     Name = name,
-                                    NoticePeriod = notice
+                                    NoticePeriod = notice,
+                                    Position = position
                                 };
             CurrentSession.Store(candidate);
         }
@@ -39,7 +40,7 @@ namespace ProductivityTracker.Services.Services.Candidate
             CurrentSession.Delete(candidate);
         }
 
-        public void Update(string id, string name, string contact, string company, string currentCtc, string expectedCtc, string notice)
+        public void Update(string id, string name, string contact, string company, string position, string currentCtc, string expectedCtc, string notice)
         {
             var candidate = CurrentSession.Load<Domain.Model.Candidate>(id);
             candidate.Company = company;
@@ -48,6 +49,7 @@ namespace ProductivityTracker.Services.Services.Candidate
             candidate.ExpectedCtc = expectedCtc;
             candidate.Name = name;
             candidate.NoticePeriod = notice;
+            candidate.Position = position;
         }
     }
 }

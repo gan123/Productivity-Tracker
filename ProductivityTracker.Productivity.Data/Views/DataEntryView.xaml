@@ -32,7 +32,7 @@
             <Run Text="*" Foreground="Red"/>
             <Run Text=":"/>
             </TextBlock>
-            <Controls2:CustomComboBox Grid.Column="1" Grid.Row="1" Width="250" Height="23" HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="4 4 14 4" ItemsSource="{Binding Recruiters}" SelectedItem="{Binding Recruiter, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnDataErrors=True}" SelectedValue="{Binding Recruiter.Id}" SelectedValuePath="Id" >
+            <Controls2:CustomComboBox Grid.Column="1" Grid.Row="1" Visibility="{Binding IsAdmin, Converter={StaticResource BooleanToVisibilityConverter}}" Width="250" Height="23" HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="4 4 14 4" ItemsSource="{Binding Recruiters}" SelectedItem="{Binding Recruiter, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnDataErrors=True}" SelectedValue="{Binding Recruiter.Id}" SelectedValuePath="Id" >
                 <Controls2:CustomComboBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock Text="{Binding FullName}" Foreground="Black" Margin="2" HorizontalAlignment="Left" VerticalAlignment="Center"/>
@@ -44,6 +44,7 @@
                     </DataTemplate>
                 </Controls2:CustomComboBox.SelectedItemTemplate>
             </Controls2:CustomComboBox>
+            <TextBlock Grid.Column="1" Grid.Row="1" Margin="4" VerticalAlignment="Center" HorizontalAlignment="Left" Visibility="{Binding IsAdmin, Converter={StaticResource InvertedBoolToVisibilityConverter}}" Text="{Binding Recruiter.FullName}" />
 
             <TextBlock Grid.Column="0" Grid.Row="2" Style="{StaticResource LabelStyle}">
             <Run Text="Position"/>

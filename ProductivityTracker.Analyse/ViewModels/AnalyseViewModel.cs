@@ -42,7 +42,7 @@ namespace ProductivityTracker.Analyse.ViewModels
         private string _month;
         private IEnumerable<string> _weeks;
         private string _week;
-        private DataSeriesCollection _monthChartSource;
+        private DataSeriesCollection _chartSource;
 
         [ImportingConstructor]
         public AnalyseViewModel(
@@ -54,6 +54,8 @@ namespace ProductivityTracker.Analyse.ViewModels
             _updateStatusRequest = new InteractionRequest<ResponseNotification>();
 
             UpdateStatusCommand = new DelegateCommand<ProductivityModel>(UpdateStatus);
+            SearchCommand = new DelegateCommand(Search);
+            ClearCommand = new DelegateCommand(Clear);
             Productivities = new CollectionViewSource();
             Productivities.GroupDescriptions.Add(new PropertyGroupDescription("ClientName"));
         }
@@ -69,43 +71,52 @@ namespace ProductivityTracker.Analyse.ViewModels
                                                   {
                                                       Statuses = Mapper.Map<IEnumerable<StatusDto>, IEnumerable<StatusModel>>(r.Get<GetStatusesResponse>().Statuses);
                                                       Recruiters = Mapper.Map<IEnumerable<RecruiterDto>, IEnumerable<RecruiterModel>>(r.Get<GetRecruitersResponse>().Recruiters);
-                                                      var productivties = Mapper.Map<IEnumerable<ProductivityDto>, IEnumerable<ProductivityModel>>(r.Get<GetProductivitiesResponse>().Productivities);
-                                                      Months = productivties.Select(p => p.Month).Distinct();
-                                                      Weeks = productivties.Select(p => p.Week).Distinct();
-                                                      Productivities.Dispatcher.BeginInvoke(DispatcherPriority.Render, new Action(() =>
-                                                                                                                                      {
-                                                                                                                                          Productivities.Source = productivties;
-                                                                                                                                          MonthChart(productivties);
-                                                                                                                                      }));
+                                                      var productivities = Mapper.Map<IEnumerable<ProductivityDto>, IEnumerable<ProductivityModel>>(r.Get<GetProductivitiesResponse>().Productivities);
+                                                      LoadProductivities(productivities);
+                                                      Months = productivities.Select(p => p.Month).Distinct();
                                                       IsBusy = false;
                                                   }, e => IsBusy = false);
+        }
+
+        private void LoadProductivities(IEnumerable<ProductivityModel> productivities)
+        {
+            Productivities.Dispatcher.BeginInvoke(DispatcherPriority.Render, new Action(() =>
+            {
+                Productivities.Source = productivities;
+                MonthChart(productivities);
+            }));
         }
 
         private void MonthChart(IEnumerable<ProductivityModel> productivityModels)
         {
             var dataSeries = new DataSeriesCollection();
-            if (Recruiter == null)
+            var recruiters = Recruiter == null ? Recruiters : Recruiters.Where(r => r.Id == Recruiter.Id);
+            foreach (var recruiter in recruiters)
             {
-                foreach(var recruiter in Recruiters)
+                var items = productivityModels.Where(p => p.RecruiterFullName == recruiter.FullName);
+                if (items.Any())
                 {
-                    var items = productivityModels.Where(p => p.RecruiterFullName == recruiter.FullName);
-                    if (items.Any())
-                    {
-                        var series = new DataSeries { LegendText = recruiter.FullName, RenderAs = RenderAs.Column, XValueType = ChartValueTypes.Date };
-                        var dataPoints = items.GroupBy(i => i.Month,
-                                                       (k, g) => new DataPoint
-                                                       {
-                                                           XValue = k,
-                                                           YValue = g.Count(),
-                                                           AxisXLabel = k
-                                                       });
-                        foreach (var point in dataPoints) series.DataPoints.Add(point);
-                        dataSeries.Add(series);
-                    }
+                    var series = new DataSeries { LegendText = recruiter.FullName, RenderAs = RenderAs.Column };
+                    IEnumerable<DataPoint> dataPoints;
+                    dataPoints = !string.IsNullOrEmpty(Week)
+                                         ? items.GroupBy(i => i.Week,
+                                                         (k, g) => new DataPoint
+                                                         {
+                                                             YValue = g.Count(),
+                                                             AxisXLabel = k
+                                                         })
+                                         : items.GroupBy(i => i.Month,
+                                                         (k, g) => new DataPoint
+                                                         {
+                                                             YValue = g.Count(),
+                                                             AxisXLabel = k
+                                                         });
+                    foreach (var point in dataPoints) series.DataPoints.Add(point);
+                    dataSeries.Add(series);
                 }
             }
 
-            MonthChartSource = dataSeries;
+            ChartSource = dataSeries;
             if (ChartUpdated != null) ChartUpdated(this, EventArgs.Empty);
         }
 
@@ -215,6 +226,7 @@ namespace ProductivityTracker.Analyse.ViewModels
             {
                 _month = value;
                 RaisePropertyChanged(() => Month);
+                RaisePropertyChanged(() => IsWeekEnabled);
             }
         }
 
@@ -228,13 +240,13 @@ namespace ProductivityTracker.Analyse.ViewModels
             }
         }
 
-        public DataSeriesCollection MonthChartSource
+        public DataSeriesCollection ChartSource
         {
-            get { return _monthChartSource; }
+            get { return _chartSource; }
             set
             {
-                _monthChartSource = value;
-                RaisePropertyChanged(() => MonthChartSource);
+                _chartSource = value;
+                RaisePropertyChanged(() => ChartSource);
             }
         }
 
@@ -248,9 +260,17 @@ namespace ProductivityTracker.Analyse.ViewModels
             }
         }
 
+        public bool IsWeekEnabled
+        {
+            get { return !string.IsNullOrEmpty(Month); }
+        }
+
         public ICommand UpdateStatusCommand { get; set; }
 
         public ICommand SearchCommand { get; set; }
+
+        public ICommand ClearCommand { get; set; }
+
         public event EventHandler ChartUpdated;
 
         private void UpdateStatus(ProductivityModel productivity)
@@ -268,6 +288,38 @@ namespace ProductivityTracker.Analyse.ViewModels
                             Load();
                         }
                     });
+        }
+
+        private void Clear()
+        {
+            Candidate = null;
+            Client = null;
+            Month = null;
+            Week = null;
+            Status = null;
+            Recruiter = null;
+            Search();
+        }
+
+        private void Search()
+        {
+            IsBusy = true;
+            var requestDispatcher = _asyncRequestDispatcherFactory.CreateAsyncRequestDispatcher();
+            requestDispatcher.Add(new SearchProductivitiesRequest
+                                      {
+                                          CandidateId = Candidate != null ? Candidate.Id : null,
+                                          ClientId = Client != null ? Client.Id : null,
+                                          Month = Month,
+                                          RecruiterId = Recruiter != null ? Recruiter.Id : null,
+                                          StatusId = Status != null ? Status.Id : null,
+                                          Week = Week
+                                      });
+            requestDispatcher.ProcessRequests(r =>
+                                                  {
+                                                      var productivities = Mapper.Map<IEnumerable<ProductivityDto>, IEnumerable<ProductivityModel>>(r.Get<SearchProductivitiesRsponse>().Results);
+                                                      LoadProductivities(productivities);
+                                                      IsBusy = false;
+                                                  }, e => IsBusy = false);
         }
     }
 }

@@ -21,6 +21,7 @@ namespace ProductivityTracker.Productivity.Data.Interfaces
         CandidateSearch Candidate { get; set; }
         string Comments { get; set; }
         bool IsPositionEnabled { get; set; }
+        bool IsAdmin { get; set; }
 
         DelegateCommand SaveCommand { get; set; }
     }

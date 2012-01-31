@@ -1,3 +1,4 @@
+using System;
 using System.ComponentModel.Composition;
 using Agatha.Common;
 using Microsoft.Practices.Prism.Commands;
@@ -19,6 +20,7 @@ namespace ProductivityTracker.Candidate.ViewModels
         private string _contact;
         private string _currentCtc;
         private string _expectedCtc;
+        private string _position;
 
         [ImportingConstructor]
         public AddViewModel(
@@ -43,6 +45,10 @@ namespace ProductivityTracker.Candidate.ViewModels
                     case "Company":
                         if (string.IsNullOrEmpty(Company))
                             error = "Please provide a company name";
+                        break;
+                    case "Position":
+                        if (string.IsNullOrEmpty(Position))
+                            error = "Please provide a position";
                         break;
                     case "Contact":
                         if (string.IsNullOrEmpty(Contact))
@@ -135,6 +141,17 @@ namespace ProductivityTracker.Candidate.ViewModels
             }
         }
 
+        public string Position
+        {
+            get { return _position; }
+            set
+            {
+                _position = value;
+                RaisePropertyChanged(() => Position);
+                SaveCommand.RaiseCanExecuteChanged();
+            }
+        }
+
         public string Id { get; set; }
 
         public bool IsEditing
@@ -163,7 +180,7 @@ namespace ProductivityTracker.Candidate.ViewModels
         {
             return !string.IsNullOrEmpty(Name) && !string.IsNullOrEmpty(Company) && !string.IsNullOrEmpty(Contact)
                    && !string.IsNullOrEmpty(ExpectedCtc) && !string.IsNullOrEmpty(CurrentCtc) &&
-                   !string.IsNullOrEmpty(NoticePeriod);
+                   !string.IsNullOrEmpty(NoticePeriod) && !string.IsNullOrEmpty(Position);
         }
 
         private void Save()
@@ -179,7 +196,8 @@ namespace ProductivityTracker.Candidate.ViewModels
                                               CurrentCtc = CurrentCtc,
                                               ExpectedCtc = ExpectedCtc,
                                               Name = Name,
-                                              NoticePeriod = NoticePeriod
+                                              NoticePeriod = NoticePeriod,
+                                              Position = Position
                                           });
             else requestDispatcher.Add(new AddCandidateRequest
                                            {
@@ -188,7 +206,8 @@ namespace ProductivityTracker.Candidate.ViewModels
                                                CurrentCtc = CurrentCtc,
                                                ExpectedCtc = ExpectedCtc,
                                                Name = Name,
-                                               NoticePeriod = NoticePeriod
+                                               NoticePeriod = NoticePeriod,
+                                               Position = Position
                                            });
             requestDispatcher.ProcessRequests(r =>
                                                   {

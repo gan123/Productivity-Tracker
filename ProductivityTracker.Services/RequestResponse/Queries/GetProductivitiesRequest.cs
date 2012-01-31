@@ -1,4 +1,5 @@
-﻿using Agatha.Common;
+﻿using System;
+using Agatha.Common;
 
 namespace ProductivityTracker.Services.RequestResponse.Queries
 {

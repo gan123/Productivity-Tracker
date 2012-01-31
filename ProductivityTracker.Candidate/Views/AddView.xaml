@@ -1,6 +1,6 @@
 ﻿<Controls:ChildWindow x:Class="ProductivityTracker.Candidate.Views.AddView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:Controls="clr-namespace:Microsoft.Windows.Controls;assembly=WPFToolkit.Extended" xmlns:Interactivity="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity" xmlns:Core="clr-namespace:Microsoft.Expression.Interactivity.Core;assembly=Microsoft.Expression.Interactions" x:Name="AddCandidate" Width="500" Height="360" Caption="{Binding Title}" IsModal="True" WindowStartupLocation="Center">
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:Controls="clr-namespace:Microsoft.Windows.Controls;assembly=WPFToolkit.Extended" xmlns:Interactivity="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity" xmlns:Core="clr-namespace:Microsoft.Expression.Interactivity.Core;assembly=Microsoft.Expression.Interactions" x:Name="AddCandidate" Width="500" Height="375" Caption="{Binding Title}" IsModal="True" WindowStartupLocation="Center">
     <Grid DataContext="{Binding Content}" Margin="4">
         <Controls:BusyIndicator IsBusy="{Binding IsBusy}">
             <Grid>
@@ -10,6 +10,7 @@
                     </Core:PropertyChangedTrigger>
                 </Interactivity:Interaction.Triggers>
                 <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="auto"/>
@@ -37,35 +38,42 @@
                 </TextBlock>
                 <TextBox Grid.Column="1" Grid.Row="1" Style="{StaticResource TextBoxStyle}" Margin="4 4 14 4" Text="{Binding Company, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True, ValidatesOnDataErrors=True}"/>
 
-                <TextBlock Grid.Column="0" Grid.Row="2" Style="{StaticResource LabelStyle}" VerticalAlignment="Top">
+                <TextBlock Grid.Column="0" Grid.Row="2" Style="{StaticResource LabelStyle}">
+            <Run Text="Position"/>
+            <Run Text="*" Foreground="Red"/>
+            <Run Text=":"/>
+                </TextBlock>
+                <TextBox Grid.Column="1" Grid.Row="2" Style="{StaticResource TextBoxStyle}" Margin="4 4 14 4" Text="{Binding Position, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True, ValidatesOnDataErrors=True}"/>
+
+                <TextBlock Grid.Column="0" Grid.Row="3" Style="{StaticResource LabelStyle}" VerticalAlignment="Top">
             <Run Text="Contact"/>
             <Run Text="*" Foreground="Red"/>
             <Run Text=":"/>
                 </TextBlock>
-                <TextBox Grid.Column="1" Grid.Row="2" Style="{StaticResource TextBoxStyle}" Margin="4 4 14 4" Text="{Binding Contact, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True, ValidatesOnDataErrors=True}" Height="50" VerticalScrollBarVisibility="Auto" AcceptsReturn="True"/>
+                <TextBox Grid.Column="1" Grid.Row="3" Style="{StaticResource TextBoxStyle}" Margin="4 4 14 4" Text="{Binding Contact, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True, ValidatesOnDataErrors=True}" Height="50" VerticalScrollBarVisibility="Auto" AcceptsReturn="True"/>
 
-                <TextBlock Grid.Column="0" Grid.Row="3" Style="{StaticResource LabelStyle}">
+                <TextBlock Grid.Column="0" Grid.Row="4" Style="{StaticResource LabelStyle}">
             <Run Text="Current CTC"/>
             <Run Text="*" Foreground="Red"/>
             <Run Text=":"/>
                 </TextBlock>
-                <TextBox Grid.Column="1" Grid.Row="3" Style="{StaticResource TextBoxStyle}" Margin="4 4 14 4" Text="{Binding CurrentCtc, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True, ValidatesOnDataErrors=True}"/>
+                <TextBox Grid.Column="1" Grid.Row="4" Style="{StaticResource TextBoxStyle}" Margin="4 4 14 4" Text="{Binding CurrentCtc, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True, ValidatesOnDataErrors=True}"/>
 
-                <TextBlock Grid.Column="0" Grid.Row="4" Style="{StaticResource LabelStyle}" VerticalAlignment="Top">
+                <TextBlock Grid.Column="0" Grid.Row="5" Style="{StaticResource LabelStyle}" VerticalAlignment="Top">
                     <Run Text="Expected CTC"/>
             <Run Text="*" Foreground="Red"/>
             <Run Text=":"/>
                 </TextBlock>
-                <TextBox Grid.Column="1" Grid.Row="4" Style="{StaticResource TextBoxStyle}" Margin="4 4 14 4" Text="{Binding ExpectedCtc, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True, ValidatesOnDataErrors=True}" Height="50" VerticalScrollBarVisibility="Auto" AcceptsReturn="True"/>
+                <TextBox Grid.Column="1" Grid.Row="5" Style="{StaticResource TextBoxStyle}" Margin="4 4 14 4" Text="{Binding ExpectedCtc, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True, ValidatesOnDataErrors=True}" Height="50" VerticalScrollBarVisibility="Auto" AcceptsReturn="True"/>
 
-                <TextBlock Grid.Column="0" Grid.Row="5" Style="{StaticResource LabelStyle}" VerticalAlignment="Top">
+                <TextBlock Grid.Column="0" Grid.Row="6" Style="{StaticResource LabelStyle}" VerticalAlignment="Top">
                     <Run Text="Notice Period"/>
             <Run Text="*" Foreground="Red"/>
             <Run Text=":"/>
                 </TextBlock>
-                <TextBox Grid.Column="1" Grid.Row="5" Style="{StaticResource TextBoxStyle}" Margin="4 4 14 4" Text="{Binding NoticePeriod, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True, ValidatesOnDataErrors=True}" Height="50" VerticalScrollBarVisibility="Auto" AcceptsReturn="True"/>
+                <TextBox Grid.Column="1" Grid.Row="6" Style="{StaticResource TextBoxStyle}" Margin="4 4 14 4" Text="{Binding NoticePeriod, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True, ValidatesOnDataErrors=True}" Height="50" VerticalScrollBarVisibility="Auto" AcceptsReturn="True"/>
 
-                <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="6" HorizontalAlignment="Right">
+                <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="7" HorizontalAlignment="Right">
                     <Button Content="Save" Command="{Binding SaveCommand}" Height="23" Width="60" Margin="4"/>
                     <Button x:Name="Cancel" Click="OnCancelClick" Content="Cancel" Height="23" Width="60" Margin="4"/>
                 </StackPanel>

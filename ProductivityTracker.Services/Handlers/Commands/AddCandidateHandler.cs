@@ -16,7 +16,7 @@ namespace ProductivityTracker.Services.Handlers.Commands
 
         public override Response Handle(AddCandidateRequest request)
         {
-            _candidateService.Add(request.Name, request.Contact, request.Company, request.CurrentCtc, request.ExpectedCtc, request.NoticePeriod);
+            _candidateService.Add(request.Name, request.Contact, request.Company, request.Position, request.CurrentCtc, request.ExpectedCtc, request.NoticePeriod);
             return CreateDefaultResponse();
         }
     }

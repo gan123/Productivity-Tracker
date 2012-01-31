@@ -11,15 +11,14 @@ namespace ProductivityTracker.Services.Indexes
             Map = productivities => from p in productivities
                                     select new
                                                {
-                                                   PositionName = p.Position.Name,
                                                    PositionId = p.Position.Id,
-                                                   RecruiterName = p.Recruiter.Name,
+                                                   CandidateId = p.Candidate.Id,
                                                    RecruiterId = p.Recruiter.Id,
                                                    p.DateSent,
-                                                   ClientName = p.Client.Name,
                                                    ClientId = p.Client.Id,
-                                                   StatusName = p.Status.Name,
-                                                   StatusId = p.Status.Id
+                                                   StatusId = p.Status.Id,
+                                                   p.Month,
+                                                   p.Week
                                                };
             Index(r => r.Recruiter.Name, FieldIndexing.Analyzed);
             Index(r => r.Position.Name, FieldIndexing.Analyzed);

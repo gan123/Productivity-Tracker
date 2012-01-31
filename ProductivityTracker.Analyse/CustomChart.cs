@@ -20,6 +20,7 @@ namespace ProductivityTracker.Analyse
             var source = (CustomChart) d;
             if (e.NewValue != null)
             {
+                source.Series.Clear();
                 var items = (DataSeriesCollection) e.NewValue;
                 foreach(var item in items) source.Series.Add(item);
             }

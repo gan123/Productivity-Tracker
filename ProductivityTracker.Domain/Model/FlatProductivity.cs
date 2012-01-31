@@ -13,6 +13,8 @@ namespace ProductivityTracker.Domain.Model
         public DateTime? ExpectedFeedbackDate { get; set; }
         public List<Comment> Comments { get; set; }
         public DenormalizedReference Candidate { get; set; }
+        public string Month { get; set; }
+        public string Week { get; set; }
     }
 
     public class DenormalizedReference

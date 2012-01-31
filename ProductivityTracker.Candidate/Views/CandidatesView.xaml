@@ -9,7 +9,7 @@
                     <RowDefinition />
                 </Grid.RowDefinitions>
 
-                <StackPanel Orientation="Horizontal" Grid.Row="0" Margin="4" HorizontalAlignment="Right" Visibility="{Binding IsAdmin, Converter={StaticResource BooleanToVisibilityConverter}}">
+                <StackPanel Orientation="Horizontal" Grid.Row="0" Margin="4" HorizontalAlignment="Right" >
                     <Button Command="{Binding AddCommand}" Cursor="Hand" Margin="4 4 2 4" >
                         <Button.Template>
                             <ControlTemplate>
@@ -71,6 +71,13 @@
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                     <TextBlock Text="{Binding Company}" Margin="2" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTemplateColumn Header="Position" Width="*" HeaderStyle="{StaticResource DataGridColumnHeaderStyle}">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Position}" Margin="2" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>

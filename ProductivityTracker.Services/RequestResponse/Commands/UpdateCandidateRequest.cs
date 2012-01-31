@@ -9,5 +9,6 @@
         public string CurrentCtc { get; set; }
         public string ExpectedCtc { get; set; }
         public string NoticePeriod { get; set; }
+        public string Position { get; set; }
     }
 }

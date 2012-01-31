@@ -4,6 +4,7 @@ using System.ComponentModel.Composition;
 using System.Windows.Input;
 using System.Windows.Threading;
 using Microsoft.Practices.Prism.Commands;
+using ProductivityTracker.Common;
 using ProductivityTracker.Interfaces;
 using ProductivityTracker.Navigation;
 using ProductivityTracker.Ui.Common;
@@ -20,6 +21,8 @@ namespace ProductivityTracker.ViewModels
         private string _login;
         private string _password;
         private IEnumerable<TabNavigationItem> _tabItems;
+        private bool _hasLoginFailed;
+        private RecruiterDto _loggedInUser;
 
         private const string RecruitersViewExportName = "ProductivityTracker.Recruiter.Views.RecruitersView";
         private const string ClientViewExportName = "ProductivityTracker.Client.Views.ClientView";
@@ -86,6 +89,26 @@ namespace ProductivityTracker.ViewModels
             }
         }
 
+        public bool HasLoginFailed
+        {
+            get { return _hasLoginFailed; }
+            set
+            {
+                _hasLoginFailed = value;
+                RaisePropertyChanged(() => HasLoginFailed);
+            }
+        }
+
+        public RecruiterDto LoggedInUser
+        {
+            get { return _loggedInUser; }
+            set
+            {
+                _loggedInUser = value;
+                RaisePropertyChanged(() => LoggedInUser);
+            }
+        }
+
         public void Load()
         {
             
@@ -97,6 +120,7 @@ namespace ProductivityTracker.ViewModels
         public ICommand LoadClientsViewCommand { get; set; }
         public ICommand LoadAddDataViewCommand { get; set; }
         public ICommand LoadCandidatesViewCommand { get; set; }
+        public ICommand ChangePasswordCommand { get; set; }
 
         public Dispatcher Dispatcher { get; set; }
 
@@ -113,7 +137,8 @@ namespace ProductivityTracker.ViewModels
 
         private void LoadAddDataView()
         {
-            _navigationService.NavigateTo(MainRegion, DataEntryViewExportName, new Dictionary<string, string>());
+            var parameters = new Dictionary<string, string> { { "IsAdmin", _securityService.CurrentRecruiter.IsAdmin.ToString() } };
+            _navigationService.NavigateTo(MainRegion, DataEntryViewExportName, parameters);
         }
 
         private void LoadCandidatesView()
@@ -132,13 +157,16 @@ namespace ProductivityTracker.ViewModels
             IsBusy = true;
             _securityService.Authenticate(Login, Password, () =>
                                                                {
+                                                                   LoggedInUser = _securityService.CurrentRecruiter;
                                                                    IsAuthenticated = true;
                                                                    IsBusy = false;
+                                                                   HasLoginFailed = false;
                                                                    Dispatcher.BeginInvoke(new Action(BuildTabItems));
                                                                }, e =>
-                                                                          {
-                                                                              IsBusy = false;
-                                                                          });
+                                                                      {
+                                                                          HasLoginFailed = true;
+                                                                          IsBusy = false;
+                                                                      });
         }
 
         private bool CanLogin()

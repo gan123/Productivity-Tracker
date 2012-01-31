@@ -17,14 +17,32 @@
 
                 <Border Grid.Row="0" BorderThickness="0 0 0 2" BorderBrush="{StaticResource ButtonNormalBackgroundFill}" >
                     <StackPanel>
-                        <Image Source="../Resources/Logo/logo.png" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="4 0 0 0" Width="217" Height="34" />
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition Width="auto"/>
+                            </Grid.ColumnDefinitions>
+                            <Image Grid.Column="0" Source="../Resources/Logo/logo.png" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="4 0 0 0" Width="217" Height="34" />
+                            <StackPanel Grid.Column="1" Margin="2" Visibility="{Binding IsAuthenticated, Converter={StaticResource BooleanToVisibilityConverter}}">
+                                <TextBlock Text="{Binding LoggedInUser.FullName, StringFormat='{}Welcome {0}'}" Margin="2" />
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                    <Button Margin="2" Cursor="Hand" Command="{Binding ChangePasswordCommand}">
+                                        <Button.Template>
+                                            <ControlTemplate>
+                                                <TextBlock Text="Change Password" FontSize="9" Foreground="Blue" TextDecorations="Underline" />
+                                            </ControlTemplate>
+                                        </Button.Template>
+                                    </Button>
+                                </StackPanel>
+                            </StackPanel>
+                        </Grid>
                         <ProductivityTracker:TabNavigator Background="{StaticResource ButtonNormalBackgroundFill}" Items="{Binding TabItems}" Margin="0 4 0 0" Visibility="{Binding IsAuthenticated, Converter={StaticResource BooleanToVisibilityConverter}}"/>
                     </StackPanel>
                 </Border>
                 
                 <ContentControl Grid.Row="1" Regions:RegionManager.RegionName="MainRegion" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Visibility="{Binding IsAuthenticated, Converter={StaticResource BooleanToVisibilityConverter}}"/>
 
-                <GroupBox Grid.Row="1" Height="150" Width="300" VerticalAlignment="Center" HorizontalAlignment="Center" Header="Login" Visibility="{Binding IsAuthenticated, Converter={StaticResource InvertedBoolToVisibilityConverter}}" >
+                <GroupBox Grid.Row="1" Height="170" Width="300" VerticalAlignment="Center" HorizontalAlignment="Center" Header="Login" Visibility="{Binding IsAuthenticated, Converter={StaticResource InvertedBoolToVisibilityConverter}}" >
                     <Border Padding="2" >
                         <Grid >
                             <Grid.ColumnDefinitions>
@@ -32,17 +50,19 @@
                                 <ColumnDefinition />
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"/>
                                 <RowDefinition />
                                 <RowDefinition />
                                 <RowDefinition />
                             </Grid.RowDefinitions>
 
-                            <TextBlock Text="Login:" Style="{StaticResource LabelStyle}" Grid.Row="0" Grid.Column="0"/>
-                            <TextBox Grid.Row="0" Grid.Column="1" Style="{StaticResource TextBoxStyle}" Text="{Binding Login, Mode=TwoWay}"/>
-                            <TextBlock Text="Password:" Style="{StaticResource LabelStyle}" Grid.Row="1" Grid.Column="0"/>
-                            <PasswordBox Grid.Row="1" Grid.Column="1" Height="23" Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Center" PasswordChar="*" PasswordChanged="PasswordBox_PasswordChanged"/>
+                            <TextBlock Style="{StaticResource LabelStyle}" Text="Invalid username or password" Foreground="Red" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="0" Visibility="{Binding HasLoginFailed, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                            <TextBlock Text="Login:" Style="{StaticResource LabelStyle}" Grid.Row="1" Grid.Column="0"/>
+                            <TextBox Grid.Row="1" Grid.Column="1" Style="{StaticResource TextBoxStyle}" Text="{Binding Login, Mode=TwoWay}"/>
+                            <TextBlock Text="Password:" Style="{StaticResource LabelStyle}" Grid.Row="2" Grid.Column="0"/>
+                            <PasswordBox Grid.Row="2" Grid.Column="1" Height="23" Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Center" PasswordChar="*" PasswordChanged="PasswordBox_PasswordChanged"/>
 
-                            <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Right">
+                            <StackPanel Orientation="Horizontal" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Right">
                                 <Button Content="Login" Margin="4" Command="{Binding LoginCommand}" Height="23" Width="60" IsDefault="True"/>
                             </StackPanel>
                         </Grid>

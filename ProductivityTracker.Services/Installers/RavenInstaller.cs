@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Configuration;
 using System.ServiceProcess;
 using Microsoft.Practices.Unity;
 using ProductivityTracker.Services.Indexes;
@@ -18,14 +19,15 @@ namespace ProductivityTracker.Services.Installers
 
         private static IDocumentStore CreateDocumentStore()
         {
-            var service = new ServiceController("ProductivityTracker_Raven");
+            var machineName = ConfigurationManager.AppSettings["Machine"];
+            var service = new ServiceController("ProductivityTracker_Raven", machineName);
             if (service.Status == ServiceControllerStatus.Stopped)
             {
                 service.Start();
                 service.WaitForStatus(ServiceControllerStatus.Running, TimeSpan.FromSeconds(60));
             }
 
-            var store = new DocumentStore {Url = "http://localhost:8080"};
+            var store = new DocumentStore { Url = string.Format("http://{0}:8080", machineName) };
             store.Initialize();
 
             IndexCreation.CreateIndexes(typeof(RecruiterIndex).Assembly, store);

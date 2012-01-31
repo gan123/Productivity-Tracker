@@ -13,6 +13,7 @@ using ProductivityTracker.Productivity.Data.Models;
 using ProductivityTracker.Services.RequestResponse.Commands;
 using ProductivityTracker.Services.RequestResponse.Queries;
 using ProductivityTracker.Ui.Common;
+using ProductivityTracker.Ui.Common.Security;
 
 namespace ProductivityTracker.Productivity.Data.ViewModels
 {
@@ -22,6 +23,7 @@ namespace ProductivityTracker.Productivity.Data.ViewModels
     public class DataEntryViewModel : ViewModelBase, IDataEntryViewModel
     {
         private readonly IAsyncRequestDispatcherFactory _asyncRequestDispatcherFactory;
+        private readonly ISecurityService _securityService;
         private IEnumerable<StatusModel> _statuses;
         private StatusModel _statusModel;
         private IEnumerable<RecruiterModel> _recruiters;
@@ -33,12 +35,15 @@ namespace ProductivityTracker.Productivity.Data.ViewModels
         private CandidateSearch _candidate;
         private bool _isPositionEnabled;
         private string _comments;
+        private bool _isAdmin;
 
         [ImportingConstructor]
         public DataEntryViewModel(
-            IAsyncRequestDispatcherFactory asyncRequestDispatcherFactory)
+            IAsyncRequestDispatcherFactory asyncRequestDispatcherFactory,
+            ISecurityService securityService)
         {
             _asyncRequestDispatcherFactory = asyncRequestDispatcherFactory;
+            _securityService = securityService;
 
             SaveCommand = new DelegateCommand(Save, CanSave);
         }
@@ -48,17 +53,19 @@ namespace ProductivityTracker.Productivity.Data.ViewModels
             IsBusy = true;
             var requestDispatcher = _asyncRequestDispatcherFactory.CreateAsyncRequestDispatcher();
             requestDispatcher.Add(new GetStatusesRequest());
-            requestDispatcher.Add(new GetRecruitersRequest());
+            if (IsAdmin) requestDispatcher.Add(new GetRecruitersRequest());
+            else Recruiter = new RecruiterModel {FullName = _securityService.CurrentRecruiter.FullName, Id = _securityService.CurrentRecruiter.Id};
             requestDispatcher.ProcessRequests(r =>
                                                   {
                                                       Statuses = Mapper.Map<IEnumerable<StatusDto>, IEnumerable<StatusModel>>(r.Get<GetStatusesResponse>().Statuses);
-                                                      Recruiters = Mapper.Map<IEnumerable<RecruiterDto>, IEnumerable<RecruiterModel>>(r.Get<GetRecruitersResponse>().Recruiters);
+                                                      if (IsAdmin) Recruiters = Mapper.Map<IEnumerable<RecruiterDto>, IEnumerable<RecruiterModel>>(r.Get<GetRecruitersResponse>().Recruiters);
                                                       IsBusy = false;
                                                   }, e => IsBusy = false);
         }
 
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
+            IsAdmin = Convert.ToBoolean(navigationContext.Parameters["IsAdmin"]);
             Load();
         }
 
@@ -186,6 +193,16 @@ namespace ProductivityTracker.Productivity.Data.ViewModels
             {
                 _isPositionEnabled = value;
                 RaisePropertyChanged(() => IsPositionEnabled);
+            }
+        }
+
+        public bool IsAdmin
+        {
+            get { return _isAdmin; }
+            set
+            {
+                _isAdmin = value;
+                RaisePropertyChanged(() => IsAdmin);
             }
         }
 
