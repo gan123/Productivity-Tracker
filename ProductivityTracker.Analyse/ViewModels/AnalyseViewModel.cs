@@ -232,11 +232,12 @@ namespace ProductivityTracker.Analyse.ViewModels
 
         public IEnumerable<string> Weeks
         {
-            get { return _weeks; }
-            set
+            get
             {
-                _weeks = value;
-                RaisePropertyChanged(() => Weeks);
+                yield return "Week 1";
+                yield return "Week 2";
+                yield return "Week 3";
+                yield return "Week 4";
             }
         }
 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel.Composition;
 using System.Linq;
+using System.Threading;
 using System.Windows.Input;
 using Agatha.Common;
 using AutoMapper;
@@ -238,7 +239,11 @@ namespace ProductivityTracker.Client.ViewModels
                     {
                         if (r.Result.HasValue)
                         {
-                            if (r.Result.Value) LoadClients();
+                            if (r.Result.Value)
+                            {
+                                Delay();
+                                LoadClients();
+                            }
                         }
                     });
         }
@@ -273,13 +278,21 @@ namespace ProductivityTracker.Client.ViewModels
         private void AddPosition()
         {
             _addPositionViewModel.Name = null;
-            _addPositionRequest.Raise(new ResponseNotification {Content = _addPositionViewModel}, r =>
-                                                                                                      {
-                                                                                                          if (r.Result.HasValue)
-                                                                                                          {
-                                                                                                              if (r.Result.Value) LoadPositions();
-                                                                                                          }
-                                                                                                      });
+            _addPositionRequest.Raise(new ResponseNotification
+                                          {
+                                              ChildWindow = new AddPositionView(),
+                                              Content = _addPositionViewModel
+                                          }, r =>
+                                                 {
+                                                     if (r.Result.HasValue)
+                                                     {
+                                                         if (r.Result.Value)
+                                                         {
+                                                             Delay();
+                                                             LoadPositions();
+                                                         }
+                                                     }
+                                                 });
         }
 
         private void RemovePosition()
@@ -312,21 +325,21 @@ namespace ProductivityTracker.Client.ViewModels
         private void AddIndustry()
         {
             _addIndustryViewModel.Name = null;
-            _addIndustryRequest.Raise(new ResponseNotification {Content = _addIndustryViewModel}, r =>
-                                                                                                      {
-                                                                                                          if (
-                                                                                                              r.Result.
-                                                                                                                  HasValue)
-                                                                                                          {
-                                                                                                              if (
-                                                                                                                  r.
-                                                                                                                      Result
-                                                                                                                      .
-                                                                                                                      Value)
-                                                                                                                  LoadIndustries
-                                                                                                                      ();
-                                                                                                          }
-                                                                                                      });
+            _addIndustryRequest.Raise(new ResponseNotification
+                                          {
+                                              ChildWindow = new AddIndustryView(),
+                                              Content = _addIndustryViewModel
+                                          }, r =>
+                                                 {
+                                                     if (r.Result.HasValue)
+                                                     {
+                                                         if (r.Result.Value)
+                                                         {
+                                                             Delay();
+                                                             LoadIndustries();
+                                                         }
+                                                     }
+                                                 });
         }
 
         private void RemoveIndustry()
@@ -354,6 +367,11 @@ namespace ProductivityTracker.Client.ViewModels
                             requestDispatcher.ProcessRequests(res => LoadIndustries(), e => IsBusy = false);
                         }
                     });
+        }
+
+        private void Delay()
+        {
+            Thread.Sleep(500);
         }
 
         public void OnNavigatedTo(NavigationContext navigationContext)

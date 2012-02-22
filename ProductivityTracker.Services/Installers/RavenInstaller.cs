@@ -20,11 +20,14 @@ namespace ProductivityTracker.Services.Installers
         private static IDocumentStore CreateDocumentStore()
         {
             var machineName = ConfigurationManager.AppSettings["Machine"];
-            var service = new ServiceController("ProductivityTracker_Raven", machineName);
-            if (service.Status == ServiceControllerStatus.Stopped)
+            if (machineName == Environment.MachineName)
             {
-                service.Start();
-                service.WaitForStatus(ServiceControllerStatus.Running, TimeSpan.FromSeconds(60));
+                var service = new ServiceController("ProductivityTracker_Raven", machineName);
+                if (service.Status == ServiceControllerStatus.Stopped)
+                {
+                    service.Start();
+                    service.WaitForStatus(ServiceControllerStatus.Running, TimeSpan.FromSeconds(60));
+                }
             }
 
             var store = new DocumentStore { Url = string.Format("http://{0}:8080", machineName) };

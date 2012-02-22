@@ -20,7 +20,7 @@ namespace ProductivityTracker.Analyse.Interfaces
         RecruiterModel Recruiter { get; set; }
         IEnumerable<string> Months { get; set; }
         string Month { get; set; }
-        IEnumerable<string> Weeks { get; set; }
+        IEnumerable<string> Weeks { get; }
         DataSeriesCollection ChartSource { get; set; }
         string Week { get; set; }
         bool IsWeekEnabled { get; }

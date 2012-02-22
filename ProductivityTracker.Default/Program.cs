@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using Raven.Client.Document;
 
 namespace ProductivityTracker.Default
@@ -8,62 +9,34 @@ namespace ProductivityTracker.Default
         static void Main(string[] args)
         {
             LoadDefaultUser();
-            LoadIndustries();
             LoadStatuses();
-            Console.ReadLine();
+            Thread.Sleep(3000);
         }
 
         static void LoadDefaultUser()
         {
-            var store = new DocumentStore { Url = "http://localhost:8080" };
+            var store = new DocumentStore { Url = "http://scan-2ffd9e1675:8080" };
             store.Initialize();
 
             Console.WriteLine("Start loading user");
             using (var session = store.OpenSession())
             {
-                var karthik = new Domain.Model.Recruiter
+                var deepika = new Domain.Model.Recruiter
                                   {
-                                      FullName = "Karthik", 
-                                      Contact = "454654",
-                                      DateOfJoining = new DateTime(2007, 7, 15),
-                                      Designation = "Test",
-                                      Email = "test@gmail.com",
+                                      FullName = "Deepika Ganesh", 
+                                      Contact = "+919967659294",
+                                      DateOfJoining = new DateTime(2011, 10, 5),
+                                      Designation = "Recruiter",
+                                      Email = "deeps_1984@yahoo.com",
                                       IsAdmin = true,
-                                      Login = "karthik",
+                                      Login = "deepika",
                                       Password = "password"
                                   };
-                session.Store(karthik);
+                session.Store(deepika);
 
                 session.SaveChanges();
             }
-            Console.WriteLine("End loading industries");
-        }
-
-        static void LoadIndustries()
-        {
-            var store = new DocumentStore {Url = "http://localhost:8080"};
-            store.Initialize();
-
-            Console.WriteLine("Start loading industries");
-            using(var session = store.OpenSession())
-            {
-                var ad = new Domain.Model.Industry {Name = "Advertising"};
-                var it = new Domain.Model.Industry { Name = "IT Service" };
-                var sw = new Domain.Model.Industry { Name = "Software" };
-                var ind = new Domain.Model.Industry { Name = "Industrial" };
-                var hc = new Domain.Model.Industry { Name = "HealthCare" };
-                var ins = new Domain.Model.Industry { Name = "Insurance" };
-
-                session.Store(ad);
-                session.Store(it);
-                session.Store(sw);
-                session.Store(ind);
-                session.Store(hc);
-                session.Store(ins);
-
-                session.SaveChanges();
-            }
-            Console.WriteLine("End loading industries");
+            Console.WriteLine("End loading user");
         }
 
         static void LoadStatuses()
@@ -74,19 +47,23 @@ namespace ProductivityTracker.Default
             Console.WriteLine("Start loading statuses");
             using (var session = store.OpenSession())
             {
-                var pending = new Domain.Model.Status {Name = "Pending Feedback"};
+                var pending = new Domain.Model.Status {Name = "Feedback pending"};
                 var shortListed = new Domain.Model.Status { Name = "Shortlisted" };
                 var rejected = new Domain.Model.Status {Name = "Rejected"};
-                var intrv = new Domain.Model.Status { Name = "Interview" };
-                var intrv1 = new Domain.Model.Status { Name = "Interview 1" };
-                var intrv2 = new Domain.Model.Status { Name = "Interview 2" };
+                var intrv = new Domain.Model.Status { Name = "Interview shortlist" };
+                var intrReject = new Domain.Model.Status { Name = "Interview Reject" };
+                var intrvFeedbackPending = new Domain.Model.Status { Name = "Interview feedback pending" };
+                var closure = new Domain.Model.Status { Name = "Prospective closure" };
+                var selected = new Domain.Model.Status { Name = "Selected" };
 
                 session.Store(pending);
                 session.Store(shortListed);
                 session.Store(rejected);
                 session.Store(intrv);
-                session.Store(intrv1);
-                session.Store(intrv2);
+                session.Store(intrReject);
+                session.Store(intrvFeedbackPending);
+                session.Store(closure);
+                session.Store(selected);
 
                 session.SaveChanges();
             }
